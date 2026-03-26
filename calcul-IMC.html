@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul IMC</title>
+</head>
+<body>
+    <h1>Calculateur d'IMC</h1>
+    <form>
+        <label>Poids (kg):</label>
+        <input type="number" id="poids"/><br><br>
+        <label>Taille (m):</label>
+        <input type="number" id="taille"/><br><br>
+
+        <button type="button" onclick="calculerIMC()" style="background-color: rgb(0, 110, 255); color: white; padding: 10px 20px; font-size: 14px; border-radius: 6px; border: 0; cursor: pointer;">
+            Calculer
+        </button>
+
+        <p id="imc-result"></p>
+    </form>
+    <script>
+        function calculerIMC() {
+            var poids = document.getElementById("poids");
+            var taille = document.getElementById("taille");
+            var result = document.getElementById("imc-result")
+
+            var IMC = poids.value / (taille.value * taille.value)
+            console.log(IMC)
+
+            if(IMC > 40){
+                result.textContent = "Votre IMC est de " + IMC.toFixed(2) + ". Vous êtes en état Obésité morbire ou massive";
+            }
+            else if (IMC > 35){
+                result.textContent = "Votre IMC est de " + IMC.toFixed(2) + ". Vous êtes en état Obésité sévère";
+            }
+            else if (IMC > 30){
+                result.textContent = "Votre IMC est de " + IMC.toFixed(2) + ". Vous êtes en état Obésité modérée";
+            }
+            else if (IMC > 25){
+                result.textContent = "Votre IMC est de " + IMC.toFixed(2) + ". Vous êtes en état Surpoids";                
+            }
+            else if (IMC > 18.5){
+                result.textContent = "Votre IMC est de " + IMC.toFixed(2) + ". Vous êtes en état Corpulence normale";
+            }
+            else if (IMC < 18.5){
+                result.textContent = "Votre IMC est de " + IMC.toFixed(2) + ". Vous êtes en état Insuffisane pondérale (maigreur)";  
+            }
+
+        }
+    </script>
+</body>
+</html>

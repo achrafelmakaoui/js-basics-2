@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permutation</title>
+</head>
+<body>
+    <form>
+        <input type="text" id="val1"/><br><br>
+        <input type="text" id="val2"/><br><br>
+        <button type="button" onclick="permuter()">Permuter</button>
+    </form>
+    <script>
+        function permuter() {
+            var val1 = document.getElementById("val1");
+            var val2 = document.getElementById("val2");
+            var temp = val1.value;
+            val1.value = val2.value;
+            val2.value = temp;
+        }
+    </script>
+</body>
+</html>

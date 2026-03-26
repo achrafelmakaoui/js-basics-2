@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculatrice Simple</title>
+</head>
+<body>
+    <form>
+        <input type="number" id="nbr1"/><br><br>
+        <input type="number" id="nbr2"/><br><br>
+        <button type="button" onclick="addition()">+</button>
+        <button type="button" onclick="soustraction()">-</button>
+        <button type="button" onclick="multiplication()">*</button>
+        <button type="button" onclick="division()">/</button><br><br>
+        <input type="number" id="result"/>
+    </form>
+    <script>
+        function addition() {
+            var nbr1 = document.getElementById("nbr1").value;
+            var nbr2 = document.getElementById("nbr2").value;
+            var result = document.getElementById("result");
+
+            result.value = Number(nbr1) + Number(nbr2);
+        }
+
+        function soustraction() {
+            var nbr1 = document.getElementById("nbr1").value;
+            var nbr2 = document.getElementById("nbr2").value;
+            var result = document.getElementById("result");
+
+            result.value = Number(nbr1) - Number(nbr2);
+        }
+
+        function multiplication() {
+            var nbr1 = document.getElementById("nbr1").value;
+            var nbr2 = document.getElementById("nbr2").value;
+            var result = document.getElementById("result");
+
+            result.value = Number(nbr1) * Number(nbr2);
+        }
+        function division() {
+            var nbr1 = document.getElementById("nbr1").value;
+            var nbr2 = document.getElementById("nbr2").value;
+            var result = document.getElementById("result");
+
+            result.value = Number(nbr1) / Number(nbr2);
+        }
+    </script>
+</body>
+</html>

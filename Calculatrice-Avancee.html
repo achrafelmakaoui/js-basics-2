@@ -26,8 +26,13 @@
             background-color: rgb(230, 230, 230);
             height: 60px;
             margin: 10px;
+            padding: 5px;
             border-radius: 4px;
             border: 2px solid rgb(186, 186, 186);;
+        }
+        .display-area p{
+            font-family: 'Outfit';
+            font-size: 16px;
         }
         .divider{
             border: none;
@@ -85,56 +90,161 @@
     <div class="calculatrice">
         <div class="container">
             <div class="display-area">
-                <p></p>
+                <p id="display">0</p>
             </div>
             <hr class="divider">
             <div class="calculator-option-firstRow">
-                <button class="option-action">(</button>
-                <button class="option-action">)</button>
-                <button class="option-action">%</button>
-                <button class="option-action">CE</button>
+                <button class="option-action" onclick="addToDisplay('(')">(</button>
+                <button class="option-action" onclick="addToDisplay(')')">)</button>
+                <button class="option-action" onclick="addToDisplay('%')">%</button>
+                <button class="option-action" onclick="clearDisplay()">CE</button>
             </div>
             <hr class="divider2">
             <div class="calculator-option">
-                <button class="option-action">Inv</button>
-                <button class="option-action">Sin</button>
-                <button class="option-action">In</button>
-                <button class="option-action-number">7</button>
-                <button class="option-action-number">8</button>
-                <button class="option-action-number">9</button>
-                <button class="option-action">÷</button>
+                <button class="option-action" onclick="toggleInv()">Inv</button>
+                <button class="option-action" id="btn-sin" onclick="applyTrig('sin')">Sin</button>
+                <button class="option-action" onclick="applyFunc('ln')">In</button>
+                <button class="option-action-number" onclick="addToDisplay('7')">7</button>
+                <button class="option-action-number" onclick="addToDisplay('8')">8</button>
+                <button class="option-action-number" onclick="addToDisplay('9')">9</button>
+                <button class="option-action" onclick="addToDisplay('/')">÷</button>
             </div>
             <hr class="divider2">
             <div class="calculator-option">
-                <button class="option-action">π</button>
-                <button class="option-action">Cos</button>
-                <button class="option-action">Log</button>
-                <button class="option-action-number">4</button>
-                <button class="option-action-number">5</button>
-                <button class="option-action-number">6</button>
-                <button class="option-action">x</button>
+                <button class="option-action" onclick="addConstant('pi')">π</button>
+                <button class="option-action" id="btn-cos" onclick="applyTrig('cos')">Cos</button>
+                <button class="option-action" onclick="applyFunc('log')">Log</button>
+                <button class="option-action-number" onclick="addToDisplay('4')">4</button>
+                <button class="option-action-number" onclick="addToDisplay('5')">5</button>
+                <button class="option-action-number" onclick="addToDisplay('6')">6</button>
+                <button class="option-action" onclick="addToDisplay('*')">x</button>
             </div>
             <hr class="divider2">
             <div class="calculator-option">
-                <button class="option-action">e</button>
-                <button class="option-action">Tan</button>
-                <button class="option-action">√</button>
-                <button class="option-action-number">3</button>
-                <button class="option-action-number">2</button>
-                <button class="option-action-number">1</button>
-                <button class="option-action">-</button>
+                <button class="option-action" onclick="addConstant('e')">e</button>
+                <button class="option-action" id="btn-tan" onclick="applyTrig('tan')">Tan</button>
+                <button class="option-action" onclick="applyFunc('sqrt')">√</button>
+                <button class="option-action-number" onclick="addToDisplay('3')">3</button>
+                <button class="option-action-number" onclick="addToDisplay('2')">2</button>
+                <button class="option-action-number" onclick="addToDisplay('1')">1</button>
+                <button class="option-action" onclick="addToDisplay('-')">-</button>
             </div>
             <hr class="divider2">
             <div class="calculator-option">
-                <button class="option-action">EXP</button>
-                <button class="option-action">x²</button>
-                <button class="option-action">x^</button>
-                <button class="option-action">.</button>
-                <button class="option-action-number">0</button>
-                <button class="option-action">=</button>
-                <button class="option-action">+</button>
+                <button class="option-action" onclick="applyFunc('exp')">EXP</button>
+                <button class="option-action" onclick="applyFunc('square')">x²</button>
+                <button class="option-action" onclick="addToDisplay('^')">x^</button>
+                <button class="option-action" onclick="addToDisplay('.')">.</button>
+                <button class="option-action-number" onclick="addToDisplay('0')">0</button>
+                <button class="option-action" onclick="calculate()">=</button>
+                <button class="option-action" onclick="addToDisplay('+')">+</button>
             </div>
         </div>
     </div>
+
+    <script>
+        let expression = "";
+        let isInvMode = false;
+
+        function updateDisplay(val) {
+            document.getElementById("display").textContent = val || "0";
+        }
+
+        function addToDisplay(char) {
+            if (expression === "0" && char !== ".") {
+                expression = char;
+            } else {
+                expression += char;
+            }
+            updateDisplay(expression);
+        }
+
+        function clearDisplay() {
+            expression = "";
+            updateDisplay("0");
+        }
+
+        function addConstant(name) {
+            if (name === "pi") {
+                expression += Math.PI;
+            } else if (name === "e") {
+                expression += Math.E;
+            }
+            updateDisplay(expression);
+        }
+
+        function applyFunc(func) {
+            let val = parseFloat(expression);
+            if (isNaN(val)) return;
+
+            let result;
+            if (func === "ln") {
+                result = Math.log(val);
+            } else if (func === "log") {
+                result = Math.log10(val);
+            } else if (func === "sqrt") {
+                result = Math.sqrt(val);
+            } else if (func === "square") {
+                result = val * val;
+            } else if (func === "exp") {
+                result = Math.exp(val);
+            }
+
+            expression = String(result);
+            updateDisplay(expression);
+        }
+
+        function applyTrig(func) {
+            let val = parseFloat(expression);
+            if (isNaN(val)) return;
+
+            let rad = val * (Math.PI / 180);
+            let result;
+
+            if (isInvMode) {
+                if (func === "sin") result = Math.asin(val) * (180 / Math.PI);
+                else if (func === "cos") result = Math.acos(val) * (180 / Math.PI);
+                else if (func === "tan") result = Math.atan(val) * (180 / Math.PI);
+            } else {
+                if (func === "sin") result = Math.sin(rad);
+                else if (func === "cos") result = Math.cos(rad);
+                else if (func === "tan") result = Math.tan(rad);
+            }
+
+            expression = String(parseFloat(result.toFixed(10)));
+            updateDisplay(expression);
+        }
+
+        function toggleInv() {
+            isInvMode = !isInvMode;
+
+            document.getElementById("btn-sin").textContent = isInvMode ? "arcSin" : "Sin";
+            document.getElementById("btn-cos").textContent = isInvMode ? "arcCos" : "Cos";
+            document.getElementById("btn-tan").textContent = isInvMode ? "arcTan" : "Tan";
+        }
+
+        function calculate() {
+            try {
+                let expr = expression.replace(/\^/g, "**");
+
+                expr = expr.replace(/(\d+(\.\d+)?)%/g, function(match, num) {
+                    return parseFloat(num) / 100;
+                });
+
+                let result = eval(expr);
+
+                if (typeof result === "number" && !Number.isInteger(result)) {
+                    result = parseFloat(result.toFixed(10));
+                }
+
+                expression = String(result);
+                updateDisplay(expression);
+            } catch (err) {
+                updateDisplay("Erreur");
+                expression = "";
+            }
+        }
+
+    </script>
 </body>
 </html>
